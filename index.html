@@ -91,16 +91,6 @@
         outline-offset: 3px;
         border-radius: 0.5rem;
       }
-      /* Skeleton placeholder while cards load */
-      .skeleton {
-        background: linear-gradient(
-          90deg,
-          #e5e7eb 25%,
-          #f3f4f6 50%,
-          #e5e7eb 75%
-        );
-        background-size: 200% 100%;
-      }
     </style>
 
     <!-- ── JSON-LD Structured Data ───────────────────────────── -->
@@ -128,7 +118,7 @@
       <div
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between"
       >
-        <div class="flex items-center gap-3">
+        <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Scroll to top" role="button">
           <!-- Arabic crescent icon (inline SVG — zero network cost) -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -142,18 +132,35 @@
           <h1
             class="text-xl sm:text-2xl font-bold text-brand-600 tracking-tight leading-tight"
           >
-            Holy Quran – Chapters
+            Holy Quran
           </h1>
-        </div>
-        <!-- Chapter count badge -->
-        <span
-          id="chapter-count"
-          class="text-xs font-semibold bg-brand-100 text-brand-600 rounded-full px-3 py-1 hidden"
-        >
-          30 Chapters
-        </span>
+        </a>
+        <!-- Hamburger menu button -->
+        <button id="menu-btn" class="p-2 -mr-2 text-brand-600 hover:bg-brand-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
     </header>
+
+    <!-- ── Mobile Drawer ─────────────────────────────────────── -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-gray-900/50 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+    <div id="drawer" class="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-bold text-lg text-brand-700">All Chapters</h2>
+        <button id="close-drawer" class="p-2 -mr-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300" aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="overflow-y-auto p-4 flex-1">
+        <ul id="drawer-list" class="space-y-1">
+          <!-- Drawer links injected by JS -->
+        </ul>
+      </div>
+    </div>
 
     <!-- ════════════════════════════════════════════════════════
        MAIN CONTENT
@@ -162,51 +169,13 @@
       id="main-content"
       class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8"
     >
-      <!-- Search input -->
-      <div class="mb-6 max-w-sm">
-        <label for="search-input" class="sr-only">Search chapters</label>
-        <div class="relative">
-          <svg
-            class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
-            />
-          </svg>
-          <input
-            id="search-input"
-            type="search"
-            placeholder="Search chapters…"
-            aria-label="Search Quran chapters"
-            class="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 bg-white text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-          />
-        </div>
-      </div>
-
       <!-- ── Chapter grid ─────────────────────────────────────── -->
       <section aria-label="Quran Chapters">
         <div
           id="chapters-grid"
           class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
         >
-          <!-- Cards injected by JS -->
         </div>
-
-        <!-- Empty / error state -->
-        <p
-          id="empty-state"
-          class="hidden text-center text-gray-500 mt-16 text-sm"
-        >
-          No chapters found.
-        </p>
       </section>
     </main>
 
@@ -229,16 +198,18 @@
         "use strict";
 
         const grid = document.getElementById("chapters-grid");
-        const emptyState = document.getElementById("empty-state");
-        const countBadge = document.getElementById("chapter-count");
-        const searchInput = document.getElementById("search-input");
+        const menuBtn = document.getElementById("menu-btn");
+        const drawer = document.getElementById("drawer");
+        const drawerOverlay = document.getElementById("drawer-overlay");
+        const closeDrawerBtn = document.getElementById("close-drawer");
+        const drawerList = document.getElementById("drawer-list");
         let chapters = [];
 
         /* ── build a single card ── */
         function buildCard(ch) {
           const article = document.createElement("article");
           article.className =
-            "group bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden cursor-pointer";
+            "group bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg";
           article.setAttribute("tabindex", "0");
           article.setAttribute("role", "link");
           article.setAttribute("aria-label", `Open ${ch.chapter_name} PDF`);
@@ -291,26 +262,6 @@
           return article;
         }
 
-        /* ── render filtered list ── */
-        function render(query) {
-          const q = (query || "").trim().toLowerCase();
-          const filtered = q
-            ? chapters.filter(
-                (ch) =>
-                  ch.chapter_name.toLowerCase().includes(q) ||
-                  String(ch.chapter_id) === q,
-              )
-            : chapters;
-
-          grid.innerHTML = "";
-          if (filtered.length === 0) {
-            emptyState.classList.remove("hidden");
-          } else {
-            emptyState.classList.add("hidden");
-            filtered.forEach((ch) => grid.appendChild(buildCard(ch)));
-          }
-        }
-
         /* ── load chapters ── */
         chapters = [
           { "chapter_id": 1,  "chapter_name": "Al-Fatihah (The Opening)",        "thumbnail_url": "thumbnail/1.webp",  "pdf_url": "pdf/1.pdf"  },
@@ -345,16 +296,45 @@
           { "chapter_id": 30, "chapter_name": "Ar-Rum (The Romans)",              "thumbnail_url": "thumbnail/30.webp", "pdf_url": "pdf/30.pdf" }
         ];
 
-        countBadge.textContent = `${chapters.length} Chapters`;
-        countBadge.classList.remove("hidden");
-        render("");
+        chapters.forEach((ch) => {
+          // Render Main Grid Card
+          grid.appendChild(buildCard(ch));
 
-        /* ── live search ── */
-        let debounceTimer;
-        searchInput.addEventListener("input", () => {
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => render(searchInput.value), 200);
+          // Render Drawer Sidebar Link
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = ch.pdf_url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.className = "flex items-center px-3 py-2.5 rounded-lg hover:bg-brand-50 text-sm font-medium text-gray-700 hover:text-brand-700 transition-colors";
+          a.textContent = `Para ${ch.chapter_id}: ${ch.chapter_name}`;
+          li.appendChild(a);
+          drawerList.appendChild(li);
         });
+
+        /* ── Drawer Toggle Logic ── */
+        function openDrawer() {
+          drawerOverlay.classList.remove("hidden");
+          // Request animation frame to ensure the element is un-hidden before animating opacity
+          requestAnimationFrame(() => {
+            drawerOverlay.classList.remove("opacity-0");
+            drawer.classList.remove("translate-x-full");
+          });
+          document.body.style.overflow = "hidden"; // Prevent background scrolling
+        }
+
+        function closeDrawer() {
+          drawerOverlay.classList.add("opacity-0");
+          drawer.classList.add("translate-x-full");
+          setTimeout(() => {
+            drawerOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }, 300); // match duration-300
+        }
+
+        menuBtn.addEventListener("click", openDrawer);
+        closeDrawerBtn.addEventListener("click", closeDrawer);
+        drawerOverlay.addEventListener("click", closeDrawer);
       })();
     </script>
   </body>
