@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/akibwork/public_html/quran
+    - /bin/cp -R * $DEPLOYPATH
