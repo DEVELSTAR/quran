@@ -1,109 +1,103 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- ── Primary SEO ───────────────────────────────────────── -->
-    <title>Read Holy Quran Chapters Online – AkibWorks</title>
-    <meta
-      name="description"
-      content="Read all Quran chapters online in PDF format. Simple, fast and mobile friendly."
-    />
-    <meta
-      name="keywords"
-      content="Quran, Holy Quran, Quran PDF, Quran chapters, read Quran online, Islamic book"
-    />
+    <!-- Primary SEO -->
+    <title>Holy Quran — Read Chapters & Download PDFs | AkibWorks</title>
+    <meta name="description" content="Read and download Holy Quran chapters in PDF. Mobile-friendly, fast, and accessible Quran reader by AkibWorks." />
+    <meta name="keywords" content="Quran, Holy Quran, Quran PDF, read Quran online, Quran chapters, AkibWorks" />
     <meta name="author" content="AkibWorks" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://quran.akibworks.in/" />
 
-    <!-- ── Open Graph ────────────────────────────────────────── -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://quran.akibworks.in/" />
-    <meta
-      property="og:title"
-      content="Read Holy Quran Chapters Online – AkibWorks"
-    />
-    <meta
-      property="og:description"
-      content="Read all Quran chapters online in PDF format. Simple, fast and mobile friendly."
-    />
-    <meta
-      property="og:image"
-      content="https://quran.akibworks.in/thumbnail/1.webp"
-    />
+    <meta property="og:title" content="Holy Quran — Read Chapters & Download PDFs | AkibWorks" />
+    <meta property="og:description" content="Read and download Holy Quran chapters in PDF. Mobile-friendly, fast, and accessible Quran reader by AkibWorks." />
+    <meta property="og:image" content="https://quran.akibworks.in/thumbnail/1.webp" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="AkibWorks Quran" />
 
-    <!-- ── Twitter Card ──────────────────────────────────────── -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Read Holy Quran Chapters Online – AkibWorks"
-    />
-    <meta
-      name="twitter:description"
-      content="Read all Quran chapters online in PDF format. Simple, fast and mobile friendly."
-    />
-    <meta
-      name="twitter:image"
-      content="https://quran.akibworks.in/thumbnail/1.webp"
-    />
+    <meta name="twitter:title" content="Holy Quran — Read Chapters & Download PDFs | AkibWorks" />
+    <meta name="twitter:description" content="Read and download Holy Quran chapters in PDF. Mobile-friendly, fast, and accessible Quran reader by AkibWorks." />
+    <meta name="twitter:image" content="https://quran.akibworks.in/thumbnail/1.webp" />
 
-    <!-- ── Favicon ───────────────────────────────────────────── -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d7a2d'><path d='M12 2a10 10 0 1 0 4.93 18.69A8 8 0 0 1 12 2z'/></svg>" type="image/svg+xml" />
+    <!-- Favicons & App icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- ── Tailwind CSS (CDN — no heavy JS framework) ────────── -->
+    <!-- Performance: small critical CSS inline (keeps first paint fast) -->
+    <style>html{block-size:100%}body{min-block-size:100vh;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}</style>
+
+    <!-- Tailwind (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
-            colors: {
-              brand: {
-                50: "#f0f9f0",
-                100: "#dcf0dc",
-                500: "#2d7a2d",
-                600: "#236023",
-                700: "#1a481a",
-              },
-            },
-          },
-        },
-      };
+      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter","system-ui","sans-serif"] }, colors: { brand: { 50: "#f0f9f0",100: "#dcf0dc",500: "#2d7a2d",600: "#236023",700: "#1a481a" } } } } };
     </script>
 
-    <!-- ── Google Fonts ──────────────────────────────────────── -->
+    <!-- Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- ── Inline styles (tiny, no extra request) ────────────── -->
-    <style>
-      /* Focus-visible ring for keyboard navigation */
-      a:focus-visible {
-        outline: 3px solid #2d7a2d;
-        outline-offset: 3px;
-        border-radius: 0.5rem;
-      }
-    </style>
+    <!-- Accessible focus style -->
+    <style>a:focus-visible{outline:3px solid #2d7a2d;outline-offset:3px;border-radius:.5rem}</style>
 
-    <!-- ── JSON-LD Structured Data ───────────────────────────── -->
+    <!-- Structured Data: Organization, LocalBusiness, Website -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AkibWorks Quran",
-        "url": "https://quran.akibworks.in/",
-        "description": "Read all Quran chapters online in PDF format.",
-        "author": { "@type": "Organization", "name": "AkibWorks" }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "AkibWorks",
+            "url": "https://quran.akibworks.in/",
+            "logo": "https://quran.akibworks.in/assets/logo.svg",
+            "contactPoint": [{
+              "@type": "ContactPoint",
+              "telephone": "+00-000-000-0000",
+              "contactType": "Customer Service",
+              "areaServed": "Worldwide"
+            }]
+          },
+          {
+            "@type": "LocalBusiness",
+            "name": "AkibWorks",
+            "image": "https://quran.akibworks.in/assets/logo.svg",
+            "@id": "https://quran.akibworks.in/#business",
+            "url": "https://quran.akibworks.in/",
+            "telephone": "+00-000-000-0000",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "",
+              "addressLocality": "",
+              "addressRegion": "",
+              "postalCode": "",
+              "addressCountry": ""
+            }
+          },
+          {
+            "@type": "WebSite",
+            "url": "https://quran.akibworks.in/",
+            "name": "AkibWorks Quran",
+            "description": "Read and download Holy Quran chapters in PDF. Mobile-friendly Quran reader.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "AkibWorks",
+              "logo": { "@type": "ImageObject", "url": "https://quran.akibworks.in/assets/logo.svg" }
+            }
+          }
+        ]
       }
     </script>
+
   </head>
 
   <body

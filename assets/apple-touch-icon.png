@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Placeholder apple-touch-icon (SVG content saved with .png extension). Replace with proper PNG for App Icon. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="36" fill="#2d7a2d" />
+  <circle cx="100" cy="78" r="46" fill="#fff" opacity="0.06" />
+  <path d="M66 138 q30-40 68 0" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" />
+</svg>

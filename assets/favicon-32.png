@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is an SVG saved under .png for portability. Replace with a true PNG in production. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="40" fill="#2d7a2d" />
+  <circle cx="100" cy="88" r="54" fill="#fff" opacity="0.07" />
+  <path d="M70 140 q30-40 60 0" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" />
+</svg>
